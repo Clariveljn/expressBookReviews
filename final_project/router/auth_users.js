@@ -52,7 +52,21 @@ regd_users.put("/auth/review/:isbn", (req, res) => {
     return res.status(200).json({
      message:"Reseña agregada/modificada correctamente"
   });
+
 });
+
+regd_users.delete("/auth/review/:isbn", (req, res) => {
+
+    const username = req.session.authorization.username;
+    const isbn = req.params.isbn;
+  
+    delete books[isbn].reviews[username];
+  
+    return res.status(200).json({
+      message:"Reseña eliminada correctamente"
+    });
+  
+  });
 
 module.exports.authenticated = regd_users;
 module.exports.isValid = isValid;
