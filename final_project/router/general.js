@@ -63,17 +63,14 @@ public_users.get('/async/author/:author', async function (req, res) {
 });
 
 // Get all books based on title
-public_users.get('/title/:title',function (req, res) {
-    const title = req.params.title;
+public_users.get('/async/title/:title', async function (req, res) {
 
-    let filteredBooks = Object.keys(books)
-      .filter(key => books[key].title === title)
-      .reduce((result,key)=>{
-        result[key] = books[key];
-        return result;
-      }, {});
-  
-    return res.status(200).json(filteredBooks);
+  const title = req.params.title;
+
+  const response = await axios.get(`http://localhost:5000/title/${title}`);
+
+  return res.status(200).json(response.data);
+
 });
 
 //  Get book review
